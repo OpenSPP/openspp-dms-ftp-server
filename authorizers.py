@@ -12,6 +12,10 @@ class OpenSPPAuthorizer(DummyAuthorizer):
         openspp_client = OpenSPPClient()
         openspp_client.login(username=username, password=password)
 
+    def get_perms(self, username):
+        """Return current user permissions."""
+        return ""
+
     def get_home_dir(self, username):
         return ""
 
