@@ -2,7 +2,7 @@ import logging
 
 from pyftpdlib.servers import FTPServer
 
-from config import DEBUG, FTP_PORT
+from config import DEBUG, FTP_PORT, FTP_WORKER_COUNT
 from handlers import OpenSPPFTPHandler
 
 
@@ -16,7 +16,7 @@ def main():
     server.max_cons = 256
     server.max_cons_per_ip = 5
 
-    server.serve_forever()
+    server.serve_forever(handle_exit=True, worker_processes=FTP_WORKER_COUNT)
 
 
 if __name__ == "__main__":

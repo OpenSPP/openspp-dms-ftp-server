@@ -1,0 +1,15 @@
+version: "3.8"
+
+services:
+  ftp_server:
+    image: local_ftp_server
+    build: .
+    container_name: local_ftp
+    ports:
+      - "8002:8002"
+      - "3000:3000"
+      - "3001:3001"
+      - "3002:3002"
+      - "3003:3003"
+      - "3004:3004"
+      - "3005:3005"

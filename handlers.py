@@ -39,7 +39,7 @@ class OpenSPPFTPHandler(TLS_FTPHandler):
         )
         os.remove(file)
 
-    def ftp_CWD(self, path):
+    def ftp_CWD(self, path: str) -> str:
         cwd = self.fs.cwd
         self.respond('250 "%s" is the current directory.' % cwd)
         return path

@@ -1,5 +1,6 @@
 import os
 
+DEBUG = os.getenv("DEBUG", default=True)
 OPENSPP_URL = os.getenv("OPENSPP_URL", default="https://dev.newlogic-demo.com")
 OPENSPP_DB_NAME = os.getenv("OPENSPP_DB_NAME", default="devel")
 DEFAULT_PASSIVE_PORTS = os.getenv(
@@ -13,4 +14,4 @@ DEFAULT_SSL_KEYFILE = os.getenv(
 )
 FTP_HOSTNAME = os.getenv("FTP_HOSTNAME", default="0.0.0.0")
 FTP_PORT = os.getenv("FTP_PORT", default=8002)
-DEBUG = os.getenv("DEBUG", default=True)
+FTP_WORKER_COUNT = os.getenv("FTP_WORKER_COUNT", default=1)
