@@ -4,7 +4,12 @@ from pyftpdlib.handlers import TLS_FTPHandler
 
 from authorizers import OpenSPPAuthorizer
 from clients import OpenSPPClient
-from config import DEFAULT_PASSIVE_PORTS, DEFAULT_SSL_CERTFILE, DEFAULT_SSL_KEYFILE
+from config import (
+    DEFAULT_PASSIVE_PORTS,
+    DEFAULT_SSL_CERTFILE,
+    DEFAULT_SSL_KEYFILE,
+    FTP_HOSTNAME,
+)
 from filesystems import OpenSPPFS
 
 
@@ -14,9 +19,11 @@ class OpenSPPFTPHandler(TLS_FTPHandler):
     banner = "Welcome to OpenSPP DMS"
     permit_foreign_addresses = True
     passive_ports = DEFAULT_PASSIVE_PORTS
+    masquerade_address = FTP_HOSTNAME
 
-    tls_control_required = True
-    tls_data_required = True
+    # Force tls
+    # tls_control_required = True
+    # tls_data_required = True
     certfile = DEFAULT_SSL_CERTFILE
     keyfile = DEFAULT_SSL_KEYFILE
 
@@ -31,3 +38,8 @@ class OpenSPPFTPHandler(TLS_FTPHandler):
             username=self.username, password=self.password, filename=file
         )
         os.remove(file)
+
+    def ftp_CWD(self, path):
+        cwd = self.fs.cwd
+        self.respond('250 "%s" is the current directory.' % cwd)
+        return path

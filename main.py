@@ -2,14 +2,15 @@ import logging
 
 from pyftpdlib.servers import FTPServer
 
+from config import DEBUG, FTP_PORT
 from handlers import OpenSPPFTPHandler
 
 
 def main():
-    # Instantiate FTP server class and listen on 0.0.0.0:2121
-    address = ("", 8002)
+    address = ("0.0.0.0", FTP_PORT)
     server = FTPServer(address, OpenSPPFTPHandler)
-    logging.basicConfig(level=logging.DEBUG)
+    log_level = logging.DEBUG if DEBUG else logging.INFO
+    logging.basicConfig(level=log_level)
 
     # set a limit for connections
     server.max_cons = 256
