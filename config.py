@@ -1,6 +1,7 @@
 import os
 
 DEBUG = os.getenv("DEBUG", default=True)
+TLS = os.getenv("TLS", default=False)
 OPENSPP_URL = os.getenv("OPENSPP_URL", default="https://dev.newlogic-demo.com")
 OPENSPP_DB_NAME = os.getenv("OPENSPP_DB_NAME", default="devel")
 DEFAULT_PASSIVE_PORTS = os.getenv(

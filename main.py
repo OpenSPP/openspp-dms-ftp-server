@@ -3,12 +3,12 @@ import logging
 from pyftpdlib.servers import FTPServer
 
 from config import DEBUG, FTP_PORT, FTP_WORKER_COUNT
-from handlers import OpenSPPFTPHandler
+from handlers import OPENSPPHandler
 
 
 def main():
     address = ("0.0.0.0", FTP_PORT)
-    server = FTPServer(address, OpenSPPFTPHandler)
+    server = FTPServer(address, OPENSPPHandler)
     log_level = logging.DEBUG if DEBUG else logging.INFO
     logging.basicConfig(level=log_level)
 
