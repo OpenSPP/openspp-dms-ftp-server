@@ -1,4 +1,5 @@
 import os
+from typing import TypeVar
 
 from pyftpdlib.handlers import FTPHandler, TLS_FTPHandler
 
@@ -13,8 +14,14 @@ from config import (
 )
 from filesystems import OpenSPPFS
 
+TypeHandler = TypeVar("TypeHandler", bound=FTPHandler)
+
 
 class OpenSPPFTPHandler(FTPHandler):
+    """
+    Custom OpenSPP handler that supports OpenSPP's authorizer and custom action for file received.
+    """
+
     abstracted_fs = OpenSPPFS
     authorizer = OpenSPPAuthorizer()
     banner = "Welcome to OpenSPP DMS"
@@ -35,12 +42,20 @@ class OpenSPPFTPHandler(FTPHandler):
         os.remove(file)
 
     def ftp_CWD(self, path: str) -> str:
+        """
+        Command to change directory. Not really needed on our use case, so we just return the path.
+        :param path: Path to new directory
+        :return: Path to new directory
+        """
         cwd = self.fs.cwd
         self.respond('250 "%s" is the current directory.' % cwd)
         return path
 
 
 class OpenSPPTLSFTPHandler(TLS_FTPHandler, OpenSPPFTPHandler):
+    """
+    Custom handler with TLS enabled.
+    """
 
     certfile = DEFAULT_SSL_CERTFILE
     keyfile = DEFAULT_SSL_KEYFILE

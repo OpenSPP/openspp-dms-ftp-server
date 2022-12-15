@@ -18,6 +18,13 @@ class OpenSPPClient:
     """
 
     def login(self, username: str, password: str) -> bool:
+        """
+        Call OpenSPP login endpoint to make sure the credentials are valid.
+        :param username: User's username with upload permission
+        :param password: API key or password of the user
+        :return: Returns True if the user is valid
+        """
+
         url = f"{OPENSPP_URL}/dms/auth"
         data = {
             "params": {
@@ -37,6 +44,12 @@ class OpenSPPClient:
         return True
 
     def upload_file(self, username: str, password: str, filename: str) -> None:
+        """
+        Call OpenSPP upload endpoint to save the file.
+        :param username: User's username with upload permission
+        :param password: API key or password of the user
+        :param filename: Name of file for upload
+        """
         with open(filename, "rb") as read_file:
             base_filename = filename.split("/")[-1]
             data = read_file.read()

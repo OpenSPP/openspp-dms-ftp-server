@@ -6,7 +6,11 @@ from config import DEBUG, FTP_PORT, FTP_WORKER_COUNT
 from handlers import OPENSPPHandler
 
 
-def main():
+def main() -> None:
+    """
+    Main entrypoint to the server.
+    :return:
+    """
     address = ("0.0.0.0", FTP_PORT)
     server = FTPServer(address, OPENSPPHandler)
     log_level = logging.DEBUG if DEBUG else logging.INFO
