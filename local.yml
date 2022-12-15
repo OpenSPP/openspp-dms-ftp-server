@@ -5,6 +5,8 @@ services:
     image: local_ftp_server
     build: .
     container_name: local_ftp
+    environment:
+      - TLS=True
     ports:
       - "8002:8002"
       - "3000:3000"

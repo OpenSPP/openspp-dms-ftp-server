@@ -3,7 +3,7 @@ import logging
 
 import requests
 
-from config import OPENSPP_URL
+from config.base import OPENSPP_URL
 
 logger = logging.getLogger(__name__)
 

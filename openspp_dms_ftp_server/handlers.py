@@ -1,20 +1,18 @@
 import os
-from typing import TypeVar
 
 from pyftpdlib.handlers import FTPHandler, TLS_FTPHandler
 
-from authorizers import OpenSPPAuthorizer
-from clients import OpenSPPClient
-from config import (
+from config.base import (
     DEFAULT_PASSIVE_PORTS,
     DEFAULT_SSL_CERTFILE,
     DEFAULT_SSL_KEYFILE,
     FTP_HOSTNAME,
     TLS,
 )
-from filesystems import OpenSPPFS
 
-TypeHandler = TypeVar("TypeHandler", bound=FTPHandler)
+from .authorizers import OpenSPPAuthorizer
+from .clients import OpenSPPClient
+from .filesystems import OpenSPPFS
 
 
 class OpenSPPFTPHandler(FTPHandler):

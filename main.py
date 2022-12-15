@@ -2,8 +2,8 @@ import logging
 
 from pyftpdlib.servers import FTPServer
 
-from config import DEBUG, FTP_PORT, FTP_WORKER_COUNT
-from handlers import OPENSPPHandler
+from config.base import DEBUG, FTP_PORT, FTP_WORKER_COUNT
+from openspp_dms_ftp_server.handlers import OPENSPPHandler
 
 
 def main() -> None:

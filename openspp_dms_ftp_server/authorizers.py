@@ -1,7 +1,7 @@
 from pyftpdlib.authorizers import DummyAuthorizer
 
-from clients import OpenSPPClient
-from handlers import TypeHandler
+from . import TypeHandler
+from .clients import OpenSPPClient
 
 
 class OpenSPPAuthorizer(DummyAuthorizer):
