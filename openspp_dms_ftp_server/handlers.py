@@ -1,6 +1,6 @@
-import os
+import codecs
 
-from pyftpdlib.handlers import FTPHandler, TLS_FTPHandler
+from pyftpdlib.handlers import DTPHandler, FTPHandler, TLS_FTPHandler
 
 from config.base import (
     DEFAULT_PASSIVE_PORTS,
@@ -15,6 +15,30 @@ from .clients import OpenSPPClient
 from .filesystems import OpenSPPFS
 
 
+class OpenSPPDTPHandler(DTPHandler):
+    """
+    DTP Handler for OpenSPP specific use-cases
+    """
+
+    def handle_close(self):
+        """
+        Call OpenSPP method for uploading a file before closing the file
+        """
+        if self.file_obj is not None and not self.file_obj.closed:
+            file_content = codecs.encode(self.file_obj.getvalue(), "base64").decode(
+                "utf-8"
+            )
+            openspp_client = OpenSPPClient()
+            openspp_client.upload_file(
+                username=self.cmd_channel.username,
+                password=self.cmd_channel.password,
+                filename=self.file_obj.name,
+                file_content=file_content,
+            )
+
+        super().handle_close()
+
+
 class OpenSPPFTPHandler(FTPHandler):
     """
     Custom OpenSPP handler that supports OpenSPP's authorizer and custom action for file received.
@@ -26,18 +50,7 @@ class OpenSPPFTPHandler(FTPHandler):
     permit_foreign_addresses = True
     passive_ports = DEFAULT_PASSIVE_PORTS
     masquerade_address = FTP_HOSTNAME
-
-    def on_file_received(self, file: str) -> None:
-        """
-        Call OpenSPP method for uploading a file
-        :param file: Complete path of a file
-        :return:
-        """
-        openspp_client = OpenSPPClient()
-        openspp_client.upload_file(
-            username=self.username, password=self.password, filename=file
-        )
-        os.remove(file)
+    dtp_handler = OpenSPPDTPHandler
 
     def ftp_CWD(self, path: str) -> str:
         """
