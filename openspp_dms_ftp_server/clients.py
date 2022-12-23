@@ -1,3 +1,4 @@
+import codecs
 import logging
 
 import requests
@@ -42,17 +43,18 @@ class OpenSPPClient:
             raise OpenSPPClientException(f"Unsuccessful login. Response data: {data}")
         return True
 
-    def upload_file(
-        self, username: str, password: str, filename: str, file_content: str
-    ) -> None:
+    def upload_file(self, username: str, password: str, filename: str) -> None:
         """
         Call OpenSPP upload endpoint to save the file.
         :param username: User's username with upload permission
         :param password: API key or password of the user
         :param filename: Name of file for upload
-        :param file_content: Content of the file for upload
         """
-        base_filename = filename.split("/")[-1]
+        with open(filename, "rb") as read_file:
+            base_filename = filename.split("/")[-1]
+            data = read_file.read()
+            file_content = codecs.encode(data, "base64").decode("utf-8")
+
         url = f"{OPENSPP_URL}/dms/upload/"
         data = {
             "params": {
