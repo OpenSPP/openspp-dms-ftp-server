@@ -7,6 +7,7 @@ services:
     container_name: local_ftp
     environment:
       - TLS=True
+    tmpfs: ${FTP_UPLOAD_DIR:-/uploads}
     ports:
       - "8002:8002"
       - "3000-3005:3000-3005"

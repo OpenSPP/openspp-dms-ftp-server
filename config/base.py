@@ -16,3 +16,4 @@ DEFAULT_SSL_KEYFILE = os.getenv(
 FTP_HOSTNAME = os.getenv("FTP_HOSTNAME", default="0.0.0.0")
 FTP_PORT = os.getenv("FTP_PORT", default=8002)
 FTP_WORKER_COUNT = os.getenv("FTP_WORKER_COUNT", default=1)
+FTP_UPLOAD_DIR = os.getenv("FTP_UPLOAD_DIR", default="/uploads")
