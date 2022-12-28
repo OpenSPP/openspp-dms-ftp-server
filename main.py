@@ -1,29 +1,26 @@
-from pyftpdlib.handlers import FTPHandler
+import logging
+
 from pyftpdlib.servers import FTPServer
 
-from authorizers import OpenSPPAuthorizer
-from config import FTP_SERVER_HOSTNAME, OPENSPP_TOKEN, OPENSPP_USERNAME
+from config.base import DEBUG, FTP_PORT, FTP_WORKER_COUNT
+from openspp_dms_ftp_server.handlers import OPENSPPHandler
 
 
-def main():
-    authorizer = OpenSPPAuthorizer()
-    authorizer.add_user(
-        username=OPENSPP_USERNAME, password=OPENSPP_TOKEN, perm="elradfmwMT"
-    )
-
-    handler = FTPHandler
-    handler.authorizer = authorizer
-    handler.banner = "Welcome to OpenSPP DMS"
-
-    # Instantiate FTP server class and listen on 0.0.0.0:2121
-    address = (FTP_SERVER_HOSTNAME, 8002)
-    server = FTPServer(address, handler)
+def main() -> None:
+    """
+    Main entrypoint to the server.
+    :return:
+    """
+    address = ("0.0.0.0", FTP_PORT)
+    server = FTPServer(address, OPENSPPHandler)
+    log_level = logging.DEBUG if DEBUG else logging.INFO
+    logging.basicConfig(level=log_level)
 
     # set a limit for connections
     server.max_cons = 256
     server.max_cons_per_ip = 5
 
-    server.serve_forever()
+    server.serve_forever(handle_exit=True, worker_processes=FTP_WORKER_COUNT)
 
 
 if __name__ == "__main__":
