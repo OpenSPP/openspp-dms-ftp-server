@@ -19,7 +19,7 @@ FTP_HOSTNAME = os.getenv("FTP_HOSTNAME", default="0.0.0.0")
 FTP_PORT = os.getenv("FTP_PORT", default=8002)
 FTP_WORKER_COUNT = os.getenv("FTP_WORKER_COUNT", default=1)
 FTP_UPLOAD_DIR = os.getenv("FTP_UPLOAD_DIR", default="/uploads")
-FTP_MAX_CONNECTIONS = os.getenv("FTP_MAX_CONNECTIONS", default=256)
-FTP_MAX_CONNECTIONS_PER_IP = os.getenv(
-    "FTP_MAX_CONNECTIONS_PER_IP", default=10
+FTP_MAX_CONNECTIONS = int(os.getenv("FTP_MAX_CONNECTIONS", default=256))
+FTP_MAX_CONNECTIONS_PER_IP = int(
+    os.getenv("FTP_MAX_CONNECTIONS_PER_IP", default=10)
 )  # 0 for unlimited
