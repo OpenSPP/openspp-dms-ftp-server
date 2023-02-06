@@ -2,7 +2,13 @@ import logging
 
 from pyftpdlib.servers import FTPServer
 
-from config.base import DEBUG, FTP_PORT, FTP_WORKER_COUNT
+from config.base import (
+    DEBUG,
+    FTP_MAX_CONNECTIONS,
+    FTP_MAX_CONNECTIONS_PER_IP,
+    FTP_PORT,
+    FTP_WORKER_COUNT,
+)
 from openspp_dms_ftp_server.handlers import OPENSPPHandler
 
 
@@ -17,8 +23,8 @@ def main() -> None:
     logging.basicConfig(level=log_level)
 
     # set a limit for connections
-    server.max_cons = 256
-    server.max_cons_per_ip = 5
+    server.max_cons = FTP_MAX_CONNECTIONS
+    server.max_cons_per_ip = FTP_MAX_CONNECTIONS_PER_IP
 
     server.serve_forever(handle_exit=True, worker_processes=FTP_WORKER_COUNT)
 
