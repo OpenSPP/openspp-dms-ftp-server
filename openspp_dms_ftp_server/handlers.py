@@ -46,7 +46,7 @@ class OpenSPPFTPHandler(FTPHandler):
         :return: Path to new directory
         """
         cwd = self.fs.cwd
-        self.respond('250 "%s" is the current directory.' % cwd)
+        self.respond(f'250 "{cwd}" is the current directory.')
         return path
 
 
@@ -58,8 +58,8 @@ class OpenSPPTLSFTPHandler(TLS_FTPHandler, OpenSPPFTPHandler):
     certfile = DEFAULT_SSL_CERTFILE
     keyfile = DEFAULT_SSL_KEYFILE
     # Force tls
-    # tls_control_required = True
-    # tls_data_required = True
+    tls_control_required = TLS
+    tls_data_required = TLS
 
 
 OPENSPPHandler = OpenSPPTLSFTPHandler if TLS else OpenSPPFTPHandler
