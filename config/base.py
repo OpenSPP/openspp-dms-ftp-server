@@ -3,7 +3,6 @@ import os
 DEBUG = os.getenv("DEBUG", default=True)
 TLS = os.getenv("TLS", default=False)
 OPENSPP_URL = os.getenv("OPENSPP_URL", default="http://example.org/")
-OPENSPP_DB_NAME = os.getenv("OPENSPP_DB_NAME", default="devel")
 DEFAULT_PASSIVE_PORTS = os.getenv(
     "DEFAULT_PASSIVE_PORTS", default=[3000, 3001, 3002, 3003, 3004, 3005]
 )
