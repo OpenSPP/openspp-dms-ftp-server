@@ -2,8 +2,8 @@ from unittest.mock import patch
 
 import pytest
 
-from authorizers import OpenSPPAuthorizer
-from handlers import OpenSPPFTPHandler
+from ..authorizers import OpenSPPAuthorizer
+from ..handlers import OpenSPPFTPHandler
 
 
 class TestOpenSPPAuthorizer:
