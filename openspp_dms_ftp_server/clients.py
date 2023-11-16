@@ -35,9 +35,9 @@ class OpenSPPClient:
         response = requests.post(
             url=url, json=data, headers={"Content-Type": "application/json"}
         )
-        data = response.json()
-        if not response.status_code == 200:
+        if response.status_code != 200:
             raise OpenSPPClientException(f"Unsuccessful login. Response data: {data}")
+        data = response.json()
         result = response.json().get("result", "")
         if "200 OK" not in result:
             raise OpenSPPClientException(f"Unsuccessful login. Response data: {data}")
