@@ -68,7 +68,7 @@ class OpenSPPClient:
             url=url, json=data, headers={"Content-Type": "application/json"}
         )
         data = response.json()
-        if not response.status_code == 200:
+        if response.status_code != 200:
             logger.info(
                 f"Something went wrong during file upload. Response data: {data}"
             )
