@@ -1,6 +1,7 @@
-FROM python:3.10-slim-bullseye
+FROM python:3.10-slim-bullseye as base
 
-RUN apt update -y && apt install openssl
+FROM base as builder
+RUN apt update -y && apt install --no-install-recommends openssl
 
 COPY requirements.txt /requirements.txt
 RUN pip install -r /requirements.txt
@@ -10,4 +11,14 @@ RUN mkdir -p /etc/ssl/certs/openspp &&  \
 RUN ls /etc/ssl/certs/openspp
 WORKDIR /app
 COPY . /app
+
+FROM builder as production
 CMD ["python", "main.py"]
+
+FROM builder as development
+CMD ["python", "main.py"]
+
+FROM builder as test
+COPY requirements-test.txt /requirements-test.txt
+RUN pip install -r /requirements-test.txt
+CMD ["pytest", "-v", "-s", "--cov=openspp_dms_ftp_server", "--cov-report=term-missing", "--cov-fail-under=100", "--cov-branch", "--cov-report=xml", "--cov-report=html", "--cov-report=annotate", "--junitxml=tests.xml", "openspp_dms_ftp_server/tests/"]
