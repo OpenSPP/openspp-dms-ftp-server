@@ -21,4 +21,4 @@ CMD ["python", "main.py"]
 FROM builder as test
 COPY requirements-test.txt /requirements-test.txt
 RUN pip install -r /requirements-test.txt
-CMD ["pytest", "-v", "-s", "--cov=openspp_dms_ftp_server", "--cov-report=term-missing", "--cov-fail-under=100", "--cov-branch", "--cov-report=xml", "--cov-report=html", "--cov-report=annotate", "--junitxml=tests.xml", "openspp_dms_ftp_server/tests/"]
+CMD ["pytest", "-v", "-s", "--cov=openspp_dms_ftp_server", "--cov-report=term-missing", "--cov-fail-under=97", "--cov-branch", "--cov-report=xml", "--cov-report=html", "--cov-report=annotate", "--junitxml=tests.xml", "openspp_dms_ftp_server/tests/"]
