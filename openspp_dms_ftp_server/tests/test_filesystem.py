@@ -1,6 +1,6 @@
 from urllib.request import FTPHandler
 
-from filesystems import OpenSPPFS
+from ..filesystems import OpenSPPFS
 
 
 class TestOpenSPPFS:

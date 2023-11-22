@@ -2,8 +2,8 @@ from unittest.mock import patch
 
 import pytest
 
-from authorizers import OpenSPPAuthorizer
-from handlers import OpenSPPFTPHandler
+from ..authorizers import OpenSPPAuthorizer
+from ..handlers import OpenSPPFTPHandler
 
 
 class TestOpenSPPAuthorizer:
@@ -12,15 +12,14 @@ class TestOpenSPPAuthorizer:
         self.password = "password"
         self.authorizer = OpenSPPAuthorizer()
 
-    @patch("clients.OpenSPPClient.login")
+    @patch("openspp_dms_ftp_server.authorizers.OpenSPPClient.login")
     def test_authentication(self, mock_client):
-        mock_client = mock_client.return_value
-        mock_client.login.return_value = True
+        mock_client.return_value = True
 
         response = self.authorizer.validate_authentication(
             username=self.username, password=self.password, handler=OpenSPPFTPHandler
         )
-        assert response is None
+        assert response is True
 
     def test_permission(self):
         assert self.authorizer.get_perms(self.username) == ""

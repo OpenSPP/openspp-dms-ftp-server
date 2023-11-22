@@ -11,7 +11,7 @@ class OpenSPPAuthorizer(DummyAuthorizer):
 
     def validate_authentication(
         self, username: str, password: str, handler: type[TypeHandler]
-    ) -> None:
+    ) -> bool:
         """
         Login to OpenSPP to check if user is valid.
         :param username: User's username with upload permission
@@ -19,7 +19,7 @@ class OpenSPPAuthorizer(DummyAuthorizer):
         :param handler: Auth handler
         """
         openspp_client = OpenSPPClient()
-        openspp_client.login(username=username, password=password)
+        return openspp_client.login(username=username, password=password)
 
     def get_perms(self, username: str) -> str:
         """

@@ -2,12 +2,12 @@ version: "3.8"
 
 services:
   ftp_server:
-    image: local_ftp_server
+    image: test_ftp_server
     build:
       context: .
       dockerfile: ./Dockerfile
-      target: development
-    container_name: local_ftp
+      target: test
+    container_name: test_ftp
     environment:
       - TLS=True
       - DEBUG=True
