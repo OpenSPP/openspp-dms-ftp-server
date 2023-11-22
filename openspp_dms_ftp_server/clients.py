@@ -26,21 +26,26 @@ class OpenSPPClient:
         """
 
         url = f"{OPENSPP_URL}/dms/auth"
-        data = {
+        payload = {
             "params": {
                 "username": username,
                 "password": password,
             }
         }
         response = requests.post(
-            url=url, json=data, headers={"Content-Type": "application/json"}
+            url=url, json=payload, headers={"Content-Type": "application/json"}
         )
+        response_content = response.json()
         if response.status_code != 200:
-            raise OpenSPPClientException(f"Unsuccessful login. Response data: {data}")
-        data = response.json()
-        result = response.json().get("result", "")
+            raise OpenSPPClientException(
+                f"Unsuccessful login. Response data: {response_content}"
+            )
+
+        result = response_content.get("result", "")
         if "200 OK" not in result:
-            raise OpenSPPClientException(f"Unsuccessful login. Response data: {data}")
+            raise OpenSPPClientException(
+                f"Unsuccessful login. Response data: {response_content}"
+            )
         return True
 
     def upload_file(self, username: str, password: str, filename: str) -> None:
@@ -56,7 +61,7 @@ class OpenSPPClient:
             file_content = codecs.encode(data, "base64").decode("utf-8")
 
         url = f"{OPENSPP_URL}/dms/upload/"
-        data = {
+        payload = {
             "params": {
                 "username": username,
                 "password": password,
@@ -65,15 +70,15 @@ class OpenSPPClient:
             }
         }
         response = requests.post(
-            url=url, json=data, headers={"Content-Type": "application/json"}
+            url=url, json=payload, headers={"Content-Type": "application/json"}
         )
-        data = response.json()
+        response_content = response.json()
         if response.status_code != 200:
             logger.info(
-                f"Something went wrong during file upload. Response data: {data}"
+                f"Something went wrong during file upload. Response data: {response_content}"
             )
-        result = response.json().get("result", "")
+        result = response_content.get("result", "")
         if "200 OK" not in result:
             logger.info(
-                f"Something went wrong during file upload. Response data: {data}"
+                f"Something went wrong during file upload. Response data: {response_content}"
             )
